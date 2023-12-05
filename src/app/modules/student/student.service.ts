@@ -1,12 +1,9 @@
 import { Student } from './student.model';
-import { TStudent } from './student.interface';
-
-
 
 const getAllStudentsFromDB = async () => {
   const result = await Student.find(
     {},
-    { name: 1, gender: 1, dateOfBirth: 1, email: 1 },
+    { name: 1,id: 1, gender: 1, dateOfBirth: 1, email: 1 },
   );
   return result;
 };
