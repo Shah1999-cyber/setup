@@ -8,7 +8,6 @@ import {
   TUserName,
 } from './student.interface';
 
-
 const userNameSchema = new Schema<TUserName>({
   firstName: {
     type: String,
@@ -104,10 +103,10 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, 'Student ID is required'],
       unique: true,
     },
-    user : {
+    user: {
       type: Schema.Types.ObjectId,
       required: [true, 'User ID is required'],
-      unique : true,
+      unique: true,
       ref: 'User',
     },
     name: {
@@ -164,11 +163,15 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     profileImg: { type: String },
     admissionSemester: {
       type: Schema.Types.ObjectId,
-      ref: "AcademicSemester",
+      ref: 'AcademicSemester',
     },
     isDeleted: {
       type: Boolean,
       default: false,
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
     },
   },
   {
@@ -185,7 +188,6 @@ studentSchema.virtual('fullName').get(function () {
     this.name.firstName + ' ' + this.name.middleName + ' ' + this.name.lastName
   );
 });
-
 
 //query middleware
 

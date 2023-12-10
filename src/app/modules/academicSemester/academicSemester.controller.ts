@@ -3,15 +3,17 @@ import sendResponse from '../../utils/sendResponse';
 import catchAsync from '../../utils/catchAsync';
 import { AcademicSemesterServices } from './academicSemester.service';
 
-const createAcademicSemester = catchAsync(async (req,res) => {
-    const result = await AcademicSemesterServices.createAcademicSemesterIntoDB(req.body);
+const createAcademicSemester = catchAsync(async (req, res) => {
+  const result = await AcademicSemesterServices.createAcademicSemesterIntoDB(
+    req.body,
+  );
 
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: 'Academic Semester is created successfully',
-      data: result,
-    });
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Academic Semester is created successfully',
+    data: result,
+  });
 });
 const getAllAcademicSemester = catchAsync(async (req, res) => {
   const result = await AcademicSemesterServices.getAllAcademicSemesterFromDB();
@@ -25,7 +27,8 @@ const getAllAcademicSemester = catchAsync(async (req, res) => {
 
 const getSingleAcademicSemester = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await AcademicSemesterServices.getSingleSingleAcademicSemesterFromDB(id);
+  const result =
+    await AcademicSemesterServices.getSingleSingleAcademicSemesterFromDB(id);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -35,8 +38,12 @@ const getSingleAcademicSemester = catchAsync(async (req, res) => {
 });
 
 const updateSingleAcademicSemester = catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const result = await AcademicSemesterServices.updateSingleAcademicSemesterFromDB(id, req.body);
+  const { id } = req.params;
+  const result =
+    await AcademicSemesterServices.updateSingleAcademicSemesterFromDB(
+      id,
+      req.body,
+    );
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -46,8 +53,8 @@ const updateSingleAcademicSemester = catchAsync(async (req, res) => {
 });
 
 export const AcademicSemesterControllers = {
-    createAcademicSemester,
-    getAllAcademicSemester,
-    getSingleAcademicSemester,
-    updateSingleAcademicSemester
+  createAcademicSemester,
+  getAllAcademicSemester,
+  getSingleAcademicSemester,
+  updateSingleAcademicSemester,
 };

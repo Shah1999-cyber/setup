@@ -3,16 +3,17 @@ import sendResponse from '../../utils/sendResponse';
 import catchAsync from '../../utils/catchAsync';
 import { AcademicFacultyServices } from './academicFaculty.service';
 
+const createAcademicFaculty = catchAsync(async (req, res) => {
+  const result = await AcademicFacultyServices.createAcademicFacultyIntoDB(
+    req.body,
+  );
 
-const createAcademicFaculty = catchAsync(async (req,res) => {
-    const result = await AcademicFacultyServices.createAcademicFacultyIntoDB(req.body);
-
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: 'Academic Department is created successfully',
-      data: result,
-    });
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Academic Department is created successfully',
+    data: result,
+  });
 });
 const getAllAcademicFaculties = catchAsync(async (req, res) => {
   const result = await AcademicFacultyServices.getAllAcademicFacultesFromDB();
@@ -26,7 +27,8 @@ const getAllAcademicFaculties = catchAsync(async (req, res) => {
 
 const getSingleAcademicFaculty = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await AcademicFacultyServices.getSingleSingleAcademicFacultyFromDB(id);
+  const result =
+    await AcademicFacultyServices.getSingleSingleAcademicFacultyFromDB(id);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -36,8 +38,12 @@ const getSingleAcademicFaculty = catchAsync(async (req, res) => {
 });
 
 const updateSingleAcademicFaculty = catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const result = await AcademicFacultyServices.updateSingleAcademicFacultyFromDB(id, req.body);
+  const { id } = req.params;
+  const result =
+    await AcademicFacultyServices.updateSingleAcademicFacultyFromDB(
+      id,
+      req.body,
+    );
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -47,8 +53,8 @@ const updateSingleAcademicFaculty = catchAsync(async (req, res) => {
 });
 
 export const AcademicFacultyControllers = {
-    createAcademicFaculty,
-    getAllAcademicFaculties,
-    getSingleAcademicFaculty,
-    updateSingleAcademicFaculty
+  createAcademicFaculty,
+  getAllAcademicFaculties,
+  getSingleAcademicFaculty,
+  updateSingleAcademicFaculty,
 };

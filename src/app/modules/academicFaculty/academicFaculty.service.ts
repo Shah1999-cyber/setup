@@ -1,6 +1,5 @@
-import { TAcademicFaculty } from "./academicFaculty.interface";
-import { AcademicFaculty } from "./academicfaculty.model";
-
+import { TAcademicFaculty } from './academicFaculty.interface';
+import { AcademicFaculty } from './academicfaculty.model';
 
 const createAcademicFacultyIntoDB = async (payLoad: TAcademicFaculty) => {
   const result = await AcademicFaculty.create(payLoad);
@@ -18,14 +17,19 @@ const getSingleSingleAcademicFacultyFromDB = async (id: string) => {
   return result;
 };
 
-const updateSingleAcademicFacultyFromDB = async (_id : string,payLoad: Partial<TAcademicFaculty>) => {
-  const result = await AcademicFaculty.updateOne({ _id }, payLoad,{new: true});
+const updateSingleAcademicFacultyFromDB = async (
+  _id: string,
+  payLoad: Partial<TAcademicFaculty>,
+) => {
+  const result = await AcademicFaculty.updateOne({ _id }, payLoad, {
+    new: true,
+  });
   return result;
 };
 
 export const AcademicFacultyServices = {
-    createAcademicFacultyIntoDB,
-    getAllAcademicFacultesFromDB,
-    getSingleSingleAcademicFacultyFromDB,
-    updateSingleAcademicFacultyFromDB
+  createAcademicFacultyIntoDB,
+  getAllAcademicFacultesFromDB,
+  getSingleSingleAcademicFacultyFromDB,
+  updateSingleAcademicFacultyFromDB,
 };
