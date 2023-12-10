@@ -15,5 +15,4 @@ router.get("/:id", AcademicFacultyControllers.getSingleAcademicFaculty);
 
 router.patch("/:id",validateRequest(academicFacultyValidation.createAcademicFacultyValidationschema),AcademicFacultyControllers.updateSingleAcademicFaculty);
 
-
 export const AcademicFacultyRoutes = router;

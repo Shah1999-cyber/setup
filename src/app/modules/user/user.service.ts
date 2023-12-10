@@ -1,5 +1,5 @@
+
 import config from '../../config';
-import { TAcademicSemester } from '../academicSemester/academicSemester.interface';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
@@ -22,9 +22,11 @@ const createStudentIntoDB = async (password: string, payLoad: TStudent) => {
 
   //find academic semester info
   const admissionSemester = await AcademicSemester.findById(payLoad.admissionSemester)
-
-  //set manually generated id
-    userData.id = await generateStudentId(admissionSemester)
+  if(admissionSemester === null){
+    throw new Error('The academic Semester you are referencing is not available')
+  }
+  //set auto generated id
+    userData.id = await generateStudentId(admissionSemester);
 
   //create a user 
   const newUser = await User.create(userData); 
