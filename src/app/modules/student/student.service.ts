@@ -5,8 +5,28 @@ import httpStatus from 'http-status';
 import { User } from '../user/user.model';
 import { TStudent } from './student.interface';
 
-const getAllStudentsFromDB = async () => {
-  const result = await Student.find()
+const getAllStudentsFromDB = async (query: Record<string,unknown>) => {
+  console.log('base query', query)
+  const queryObj = {...query}; //copy
+  // {email: { $regex : query.serachTerm, $option : i}}
+  const studentSearchableFields = ['email','name.firstName', 'presentAddress'];
+
+  let searchTerm = '';
+  if(query?.searchTerm){
+    searchTerm = query.searchTerm as string;
+  }
+
+  const searchQuery = Student.find({
+    $or: studentSearchableFields.map((field) => ({
+      [field] : { $regex : searchTerm, $options : 'i'},
+    })),
+  })
+  
+
+  //filtering
+  const excludeFields = ['searchTerm','sort','limit']
+  excludeFields.forEach(el => delete queryObj[el])
+  const filterQuery = searchQuery.find(queryObj)
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -14,7 +34,20 @@ const getAllStudentsFromDB = async () => {
         path: 'academicFaculty',
       },
     });
-  return result;
+
+    let sort = 'createdAt';
+    if(query.sort){
+      sort = query.sort as string;
+    }
+    const sortQuery = filterQuery.sort(sort);
+    let limit =1;
+    if(query.limit){
+      limit = query.limit as number;
+    }
+
+    const limitQuery = await sortQuery.limit(limit);
+
+  return limitQuery;
 };
 
 const getSingleStudentFromDB = async (id: string) => {
